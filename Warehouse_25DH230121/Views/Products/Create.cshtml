@@ -1,0 +1,74 @@
+﻿
+@model Warehouse_25DH230121.Models.Products
+
+@{
+    ViewBag.Title = "Thêm sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>THÊM SẢN PHẨM MỚI</h2>
+
+@using (Html.BeginForm("Create", "Products", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label>Tên sản phẩm</label>
+
+        @Html.TextBoxFor(m => m.ProductName,
+            new { @class = "form-control" })
+
+        @Html.ValidationMessageFor(m => m.ProductName,
+            "", new { @class = "text-danger" })
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <label>Danh mục</label>
+
+        @Html.TextBoxFor(m => m.Category,
+            new { @class = "form-control" })
+
+        @Html.ValidationMessageFor(m => m.Category,
+            "", new { @class = "text-danger" })
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <label>Đơn giá</label>
+
+        @Html.TextBoxFor(m => m.Price,
+            new { @class = "form-control", type = "number", step = "0.01" })
+
+        @Html.ValidationMessageFor(m => m.Price,
+            "", new { @class = "text-danger" })
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <label>Số lượng</label>
+
+        @Html.TextBoxFor(m => m.Quantity,
+            new { @class = "form-control", type = "number" })
+
+        @Html.ValidationMessageFor(m => m.Quantity,
+            "", new { @class = "text-danger" })
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-primary">
+        Thêm sản phẩm
+    </button>
+
+    @Html.ActionLink(
+        "Quay lại",
+        "Index",
+        "Products",
+        null,
+        new { @class = "btn btn-default" }
+    )
+}

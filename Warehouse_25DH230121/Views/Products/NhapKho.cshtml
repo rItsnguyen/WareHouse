@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Nhập kho";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Nhập kho sản phẩm</h2>
+
+@using (Html.BeginForm("NhapKho", "Products", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label>Chọn sản phẩm</label>
+
+        @Html.DropDownList(
+            "productId",
+            (SelectList)ViewBag.Products,
+            "-- Chọn sản phẩm --",
+            new { @class = "form-control" }
+        )
+    </div>
+
+    <div class="form-group">
+        <label>Số lượng nhập</label>
+
+        <input type="number"
+               name="quantity"
+               class="form-control"
+               min="1"
+               step="1"
+               required />
+
+        @Html.ValidationMessage(
+            "quantity",
+            "",
+            new { @class = "text-danger" }
+        )
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-primary">
+        Nhập kho
+    </button>
+
+    @Html.ActionLink(
+        "Quay lại",
+        "Index",
+        null,
+        new { @class = "btn btn-default" }
+    )
+}

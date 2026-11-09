@@ -1,0 +1,134 @@
+﻿
+@model IEnumerable<Warehouse_25DH230121.Models.Products>
+
+@{
+    ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách sản phẩm</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+
+<p>
+    @Html.ActionLink(
+        "Nhập kho",
+        "NhapKho",
+        "Products",
+        null,
+        new { @class = "btn btn-success" }
+    )
+
+    @Html.ActionLink(
+        "Xuất kho",
+        "XuatKho",
+        "Products",
+        null,
+        new { @class = "btn btn-danger" }
+    )
+    @Html.ActionLink(
+    "Xuất nhiều sản phẩm",
+    "XuatNhieuSanPham",
+    "Products",
+    null,
+    new { @class = "btn btn-warning" }
+)
+</p>
+
+@using (Html.BeginForm("Index", "Products", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text"
+                   name="keyword"
+                   value="@ViewBag.Keyword"
+                   class="form-control"
+                   placeholder="Nhập tên sản phẩm..." />
+        </div>
+
+        <div class="col-md-3">
+            @Html.DropDownList(
+                "category",
+                (SelectList)ViewBag.Categories,
+                "Tất cả danh mục",
+                new { @class = "form-control" }
+            )
+        </div>
+
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary">
+                Tìm kiếm
+            </button>
+
+            <a href="@Url.Action("Index", "Products")"
+               class="btn btn-default">
+                Làm mới
+            </a>
+        </div>
+    </div>
+}
+
+<br />
+
+<p>
+    @Html.ActionLink(
+        "Thêm sản phẩm",
+        "Create",
+        "Products",
+        null,
+        new { @class = "btn btn-primary" }
+    )
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Mã SP</th>
+            <th>Tên sản phẩm</th>
+            <th>Danh mục</th>
+            <th>Đơn giá</th>
+            <th>Số lượng</th>
+            <th>Trạng thái tồn kho</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductID</td>
+                <td>@item.ProductName</td>
+                <td>@item.Category</td>
+                <td>@item.Price.ToString("N0") VNĐ</td>
+                <td>@item.Quantity</td>
+
+                <td>
+                    @if (item.Quantity == 0)
+                    {
+                        <span class="text-danger">
+                            Hết hàng
+                        </span>
+                    }
+
+                    else if (item.Quantity <= 5)
+                    {
+                        <span class="text-danger">
+                            Sắp hết hàng
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="text-success">
+                            Còn hàng
+                        </span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

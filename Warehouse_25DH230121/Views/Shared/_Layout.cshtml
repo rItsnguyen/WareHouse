@@ -1,0 +1,141 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Quản lý kho hàng</title>
+
+    @Styles.Render("~/Content/css")
+
+    <style>
+        body {
+            margin: 0;
+            background-color: #f5f6fa;
+        }
+
+        .header {
+            background-color: #26364a;
+            color: white;
+            padding: 18px 25px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .main-container {
+            display: flex;
+            min-height: 550px;
+        }
+
+        .sidebar {
+            width: 230px;
+            background-color: #34495e;
+            padding: 20px 0;
+            flex-shrink: 0;
+        }
+
+            .sidebar h4 {
+                color: white;
+                padding: 0 20px;
+                margin-bottom: 20px;
+            }
+
+            .sidebar a {
+                display: block;
+                color: white;
+                padding: 12px 20px;
+                text-decoration: none;
+            }
+
+                .sidebar a:hover {
+                    background-color: #1abc9c;
+                    color: white;
+                }
+
+        .content {
+            flex: 1;
+            padding: 25px;
+            min-width: 0;
+        }
+
+        .footer {
+            background-color: #26364a;
+            color: white;
+            text-align: center;
+            padding: 18px;
+            margin-top: 20px;
+        }
+
+        @@media (max-width: 700px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <div class="header">
+        WEBSITE QUẢN LÝ KHO HÀNG
+        <span style="float:right; font-size:15px;">
+            Nguyễn Bảo Trí - 25DH230121
+        </span>
+    </div>
+
+    <!-- MENU + CONTENT -->
+    <div class="main-container">
+
+        <div class="sidebar">
+            <h4>MENU CHỨC NĂNG</h4>
+
+            <a href="@Url.Action("Index", "Products")">
+                Câu 2 - Sản phẩm
+            </a>
+
+            <a href="@Url.Action("Index", "Products")">
+                Câu 3 - Tìm kiếm
+            </a>
+
+            <a href="@Url.Action("Index", "Products")">
+                Câu 4 - Nhập / Xuất kho
+            </a>
+
+            <a href="@Url.Action("Index", "Products")">
+                Câu 5 - Xuất nhiều sản phẩm
+            </a>
+
+            <a href="@Url.Action("Index", "Products")">
+                Câu 6 - Chỉnh sửa sản phẩm
+            </a>
+
+            <a href="@Url.Action("Index", "Products")">
+                Câu 7 - Thống kê kho
+            </a>
+        </div>
+
+        <div class="content">
+            @RenderBody()
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        Sinh viên: Nguyễn Bảo Trí |
+        MSSV: 25DH230121 |
+        Ngày sinh: 17/01/2007
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
