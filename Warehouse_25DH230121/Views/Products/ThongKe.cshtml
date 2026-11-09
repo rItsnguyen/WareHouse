@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Thống kê kho hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thống kê kho hàng</h2>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Tổng số sản phẩm
+            </div>
+
+            <div class="panel-body">
+                <h2>@ViewBag.TongSoSanPham</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                Số sản phẩm hết hàng
+            </div>
+
+            <div class="panel-body">
+                <h2>@ViewBag.SoSanPhamHetHang</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                Tổng giá trị tồn kho
+            </div>
+
+            <div class="panel-body">
+                <h2>
+                    @(((decimal)ViewBag.TongGiaTriTonKho).ToString("N0")) VNĐ
+                </h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br />
+
+@Html.ActionLink(
+    "Quay lại danh sách",
+    "Index",
+    "Products",
+    null,
+    new { @class = "btn btn-primary" }
+)

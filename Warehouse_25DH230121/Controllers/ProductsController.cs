@@ -370,5 +370,98 @@ namespace Warehouse_25DH230121.Controllers
                 }
             }
         }
+
+// Hiển thị trang chỉnh sửa sản phẩm
+public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            var product = db.Products.Find(id);
+
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(product);
+        }
+
+
+        // Xử lý cập nhật sản phẩm
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, Products model)
+        {
+            var product = db.Products.Find(id);
+
+            // Kiểm tra sản phẩm có tồn tại không
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            // Kiểm tra dữ liệu
+            if (string.IsNullOrWhiteSpace(model.ProductName))
+            {
+                ModelState.AddModelError(
+                    "ProductName",
+                    "Tên sản phẩm không được để trống."
+                );
+            }
+
+            if (string.IsNullOrWhiteSpace(model.Category))
+            {
+                ModelState.AddModelError(
+                    "Category",
+                    "Danh mục không được để trống."
+                );
+            }
+
+            if (model.Price <= 0)
+            {
+                ModelState.AddModelError(
+                    "Price",
+                    "Đơn giá phải lớn hơn 0."
+                );
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Chỉ cập nhật 3 trường được phép sửa
+                product.ProductName = model.ProductName;
+                product.Category = model.Category;
+                product.Price = model.Price;
+
+                // Không cập nhật Quantity và ProductID
+
+                db.SaveChanges();
+
+                TempData["Message"] =
+                    "Cập nhật sản phẩm thành công!";
+
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+        }
+
+        public ActionResult ThongKe()
+        {
+            // Tổng số sản phẩm
+            ViewBag.TongSoSanPham = db.Products.Count();
+
+            // Số sản phẩm hết hàng
+            ViewBag.SoSanPhamHetHang =
+                db.Products.Count(p => p.Quantity == 0);
+
+            // Tổng giá trị tồn kho
+            ViewBag.TongGiaTriTonKho =
+                db.Products.Sum(p => (decimal?)(p.Price * p.Quantity)) ?? 0m;
+
+            return View();
+        }
     }
 }

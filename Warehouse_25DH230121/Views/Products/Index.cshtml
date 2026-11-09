@@ -37,6 +37,14 @@
     "Products",
     null,
     new { @class = "btn btn-warning" }
+
+)
+    @Html.ActionLink(
+    "Thống kê kho",
+    "ThongKe",
+    "Products",
+    null,
+    new { @class = "btn btn-info" }
 )
 </p>
 
@@ -94,17 +102,23 @@
             <th>Đơn giá</th>
             <th>Số lượng</th>
             <th>Trạng thái tồn kho</th>
+            <th>Chức năng</th>
         </tr>
     </thead>
+
 
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
                 <td>@item.ProductID</td>
+
                 <td>@item.ProductName</td>
+
                 <td>@item.Category</td>
+
                 <td>@item.Price.ToString("N0") VNĐ</td>
+
                 <td>@item.Quantity</td>
 
                 <td>
@@ -114,7 +128,6 @@
                             Hết hàng
                         </span>
                     }
-
                     else if (item.Quantity <= 5)
                     {
                         <span class="text-danger">
@@ -127,6 +140,16 @@
                             Còn hàng
                         </span>
                     }
+                </td>
+
+                <td>
+                    @Html.ActionLink(
+                        "Chỉnh sửa",
+                        "Edit",
+                        "Products",
+                        new { id = item.ProductID },
+                        new { @class = "btn btn-warning btn-sm" }
+                    )
                 </td>
             </tr>
         }
